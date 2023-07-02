@@ -1,0 +1,6 @@
+# this file applies to all environments, only set things here that are expected to be applied uniformly to everything
+---
+name: cert-manager
+namespace: cert-manager
+chart_version: v1.12.1
+installCRDs: true

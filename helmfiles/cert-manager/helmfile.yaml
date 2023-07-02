@@ -1,0 +1,19 @@
+---
+{{ readFile "../../environments.yaml" }}
+
+repositories:
+- name: jetstack
+  url: https://charts.jetstack.io
+
+---
+releases:
+- name: {{ .Values.name }}
+  chart: jetstack/cert-manager
+  version: {{ .Values.chart_version }}
+  installed: {{ .Values.installed }}
+  missingFileHandler: Ignore
+  namespace: {{ .Values.namespace }}
+  forceNamespace: {{ .Values.namespace }}
+  values:
+  - "values.yaml"
+  - "{{ .Environment.Name }}.yaml"

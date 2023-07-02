@@ -1,0 +1,5 @@
+# this file applies to all environments, only set things here that are expected to be applied uniformly to everything
+---
+name: linkerd-crds
+namespace: linkerd
+chart_version: 1.6.1

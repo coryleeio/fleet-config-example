@@ -1,0 +1,128 @@
+---
+apiVersion: argoproj.io/v1alpha1  
+kind: Application  
+metadata:  
+    name: vault  
+    namespace: argocd  
+spec:  
+    destination:  
+        namespace: vault  
+        server: 'https://kubernetes.default.svc'  
+    source:  
+        path: config-root/localdev/vault/  
+        repoURL: 'https://github.com/coryleeio/blueprint-fleet-config'  
+        targetRevision: DEVBRANCH  
+    project: default  
+    syncPolicy:  
+        automated: null  
+        syncOptions:  
+        - CreateNamespace=true  
+        - PruneLast=true  
+
+
+---
+apiVersion: argoproj.io/v1alpha1  
+kind: Application  
+metadata:  
+    name: prometheus  
+    namespace: argocd  
+spec:  
+    destination:  
+        namespace: prometheus  
+        server: 'https://kubernetes.default.svc'  
+    source:  
+        path: config-root/localdev/prometheus/  
+        repoURL: 'https://github.com/coryleeio/blueprint-fleet-config'  
+        targetRevision: DEVBRANCH  
+    project: default  
+    syncPolicy:  
+        automated: null  
+        syncOptions:  
+        - CreateNamespace=true  
+        - PruneLast=true  
+
+
+---
+apiVersion: argoproj.io/v1alpha1  
+kind: Application  
+metadata:  
+    name: external-secrets  
+    namespace: argocd  
+spec:  
+    destination:  
+        namespace: external-secrets  
+        server: 'https://kubernetes.default.svc'  
+    source:  
+        path: config-root/localdev/external-secrets/  
+        repoURL: 'https://github.com/coryleeio/blueprint-fleet-config'  
+        targetRevision: DEVBRANCH  
+    project: default  
+    syncPolicy:  
+        automated: null  
+        syncOptions:  
+        - CreateNamespace=true  
+        - PruneLast=true  
+
+
+---
+apiVersion: argoproj.io/v1alpha1  
+kind: Application  
+metadata:  
+    name: cert-manager  
+    namespace: argocd  
+spec:  
+    destination:  
+        namespace: cert-manager  
+        server: 'https://kubernetes.default.svc'  
+    source:  
+        path: config-root/localdev/cert-manager/  
+        repoURL: 'https://github.com/coryleeio/blueprint-fleet-config'  
+        targetRevision: DEVBRANCH  
+    project: default  
+    syncPolicy:  
+        automated: null  
+        syncOptions:  
+        - CreateNamespace=true  
+        - PruneLast=true  
+
+
+---
+apiVersion: argoproj.io/v1alpha1  
+kind: Application  
+metadata:  
+    name: argocd  
+    namespace: argocd  
+spec:  
+    destination:  
+        namespace: argocd  
+        server: 'https://kubernetes.default.svc'  
+    source:  
+        path: config-root/localdev/argocd/  
+        repoURL: 'https://github.com/coryleeio/blueprint-fleet-config'  
+        targetRevision: DEVBRANCH  
+    project: default  
+    syncPolicy:  
+        automated: null  
+        syncOptions:  
+        - CreateNamespace=true  
+        - PruneLast=true  
+---
+apiVersion: argoproj.io/v1alpha1  
+kind: Application  
+metadata:  
+    name: application-root  
+    namespace: argocd  
+spec:  
+    destination:  
+        namespace: argocd  
+        server: 'https://kubernetes.default.svc'  
+    source:  
+        path: config-root/localdev/application-root/  
+        repoURL: 'https://github.com/coryleeio/blueprint-fleet-config'  
+        targetRevision: DEVBRANCH  
+    project: default  
+    syncPolicy:  
+        automated: null  
+        syncOptions:  
+        - CreateNamespace=true  
+        - PruneLast=true  

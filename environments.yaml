@@ -1,0 +1,26 @@
+---
+# environments.yaml
+# using this ensures all our environment file requirements remain in sync across
+# our charts, for us the helmfile environments actually correspond to k8s clusters
+# that we want to generate manifests for
+environments:
+  localdev:
+    values:
+    - values.yaml
+    - localdev.yaml
+  analytics:
+    values:
+    - values.yaml
+    - analytics.yaml
+  operations:
+    values:
+    - values.yaml
+    - operations.yaml
+  production-us-east-1:
+    values:
+    - values.yaml
+    - production-us-east-1.yaml
+  production-eu-west-1:
+    values:
+    - values.yaml
+    - production-eu-west-1.yaml

@@ -1,0 +1,19 @@
+---
+{{ readFile "../../environments.yaml" }}
+
+repositories:
+- name: argo-community
+  url: https://argoproj.github.io/argo-helm
+
+---
+releases:
+- name: {{ .Values.name }}
+  chart: argo-community/argo-cd
+  version: {{ .Values.chart_version }}
+  installed: {{ .Values.installed }}
+  missingFileHandler: Ignore
+  namespace: {{ .Values.namespace }}
+  forceNamespace: {{ .Values.namespace }}
+  values:
+  - "values.yaml"
+  - "{{ .Environment.Name }}.yaml"    
