@@ -1,0 +1,9 @@
+kind: Application  
+metadata:  
+    name: IGNORE  
+    namespace: IGNORE  
+spec:  
+    source:  
+        path: kustomizations/application-root/overlays/localdev/
+    destination:  
+        server: 'https://kubernetes.default.svc'  

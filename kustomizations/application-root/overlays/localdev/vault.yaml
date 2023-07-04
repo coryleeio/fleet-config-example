@@ -1,0 +1,31 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: vault
+  namespace: argocd
+spec:
+  generators:
+  - list:
+      elements:
+      - cluster: localdev
+        url: https://kubernetes.default.svc
+  template:
+    metadata:
+      name: '{{cluster}}-vault'
+    spec:
+      project: "default"
+      sources:
+        - repoURL: 'https://helm.releases.hashicorp.com'
+          chart: vault
+          targetRevision: 0.24.1
+          helm:
+            releaseName: '{{cluster}}-vault'
+            valueFiles:
+            - values.yaml
+            - $values/helmvalues/vault/{{cluster}}.yaml
+        - repoURL: 'https://github.com/coryleeio/blueprint-fleet-config'
+          targetRevision: HEAD
+          ref: values
+      destination:
+        server: '{{url}}'
+        namespace: vault

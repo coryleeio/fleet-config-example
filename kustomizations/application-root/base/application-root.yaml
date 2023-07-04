@@ -1,0 +1,19 @@
+---
+apiVersion: argoproj.io/v1alpha1  
+kind: Application  
+metadata:  
+    name: application-root  
+    namespace: argocd  
+spec:  
+    destination:  
+        namespace: argocd  
+        server: 'https://CLUSTER_GOES_HERE.local'  
+    source:  
+        repoURL: 'https://github.com/coryleeio/blueprint-fleet-config'  
+        targetRevision: HEAD  
+        path: kustomizations/application-root/overlays/CLUSTER_GOES_HERE/
+    project: default  
+    syncPolicy:  
+        automated: null  
+        syncOptions:  
+        - PruneLast=true  
