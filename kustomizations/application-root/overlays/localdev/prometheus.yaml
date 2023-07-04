@@ -28,4 +28,4 @@ spec:
           ref: values
       destination:
         server: '{{url}}'
-        namespace: prometheus
+        namespace: '{{cluster}}-prometheus'

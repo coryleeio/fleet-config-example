@@ -24,23 +24,24 @@ This repo is meant to serve as a jumping off point for a self managing argoCD in
     kind create cluster
 
     kubectl apply -k kustomizations/namespaces/overlays/localdev
-    kubectl apply -n argocd -k kustomizations/argocd/overlays/localdev
+    kubectl apply -n localdev-argocd -k kustomizations/argocd/overlays/localdev
     kubectl apply -k kustomizations/application-root/overlays/localdev
 
     export GITHUB_TOKEN=yyyyyyyyyyyyyyyyyyyyyyyyyy
-    kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d
+    kubectl -n localdev-argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d
     export ARGOCD_PASS=uuuuuuuuuuuuuuuuuu
 
-    kubectl port-forward -n argocd svc/argocd-server 8000:80
+    kubectl port-forward -n localdev-argocd svc/argocd-server 8000:80
 
     argocd login localhost:8000 --username admin --password $ARGOCD_PASS
     argocd repocreds add https://github.com/coryleeio --username coryleeio --password $GITHUB_TOKEN
     login to webui with admin/$(ARGOCD_PASS) at localhost:8000
 
     sync argocd, application-root, and vault
-    kubectl port-forward -n vault svc/localdev-vault 8200:8200
+    kubectl port-forward -n localdev-vault svc/localdev-vault 8200:8200
 
-    login with token 'root' for localdev
+    kubectl port-forward -n localdev-prometheus svc/localdev-prometheus-server 8001:80
+    kubectl port-forward -n localdev-prometheus svc/localdev-prometheus-alertmanager 9093:9093
 
 ### Add/Remove an application
 

@@ -1,9 +1,0 @@
-kind: Application  
-metadata:  
-    name: IGNORE  
-    namespace: IGNORE  
-spec:  
-    source:  
-        path: kustomizations/application-root/overlays/operations/
-    destination:  
-        server: 'https://operations.k8s.local'  

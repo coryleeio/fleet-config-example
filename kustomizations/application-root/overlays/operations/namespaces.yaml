@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
-  name: vault
+  name: namespaces
   namespace: argocd
 spec:
   generators:
@@ -11,21 +11,13 @@ spec:
         url: https://operations.k8s.local
   template:
     metadata:
-      name: '{{cluster}}-vault'
+      name: '{{cluster}}-namespaces'
     spec:
       project: "default"
       sources:
-        - repoURL: 'https://helm.releases.hashicorp.com'
-          chart: vault
-          targetRevision: 0.24.1
-          helm:
-            releaseName: '{{cluster}}-vault'
-            valueFiles:
-            - values.yaml
-            - $values/helmvalues/vault/{{cluster}}.yaml
         - repoURL: 'https://github.com/coryleeio/blueprint-fleet-config'
+          path: kustomizations/namespaces/overlays/{{cluster}}
           targetRevision: HEAD
-          ref: values
       destination:
         server: '{{url}}'
-        namespace: '{{cluster}}-vault'
+        namespace: '{{cluster}}-namespaces'

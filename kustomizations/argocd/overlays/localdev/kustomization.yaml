@@ -1,5 +1,21 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
+namespace: localdev-argocd
+
 resources:
 - https://raw.githubusercontent.com/argoproj/argo-cd/v2.7.6/manifests/install.yaml
+
+patches:
+- path: argocd-application-controller-crb-patch.yaml
+  target:
+    kind: ClusterRoleBinding
+    name: argocd-application-controller
+- path: argocd-server-crb-patch.yaml
+  target:
+    kind: ClusterRoleBinding
+    name: argocd-server
+- path: argocd-cm-patch.yaml
+  target:
+    kind: ConfigMap
+    name: argocd-cm
