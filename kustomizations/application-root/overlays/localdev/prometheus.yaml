@@ -29,3 +29,6 @@ spec:
       destination:
         server: '{{url}}'
         namespace: '{{cluster}}-prometheus'
+      syncPolicy:
+        automated: 
+          prune: true

@@ -21,3 +21,6 @@ spec:
       destination:
         server: '{{url}}'
         namespace: '{{cluster}}-namespaces'
+      syncPolicy:
+        automated: 
+          prune: true

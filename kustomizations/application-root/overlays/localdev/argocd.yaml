@@ -21,3 +21,6 @@ spec:
       destination:
         server: '{{url}}'
         namespace: '{{cluster}}-argocd'
+      syncPolicy:
+        automated: 
+          prune: true
