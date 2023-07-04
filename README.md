@@ -25,7 +25,7 @@ This repo is meant to serve as a jumping off point for a self managing argoCD in
 
     kubectl apply -k kustomizations/namespaces/overlays/localdev
     kubectl apply -n argocd -k kustomizations/argocd/overlays/localdev
-    kubectl apply -f config-root/localdev/application-root/
+    kubectl apply -k kustomizations/application-root/overlays/localdev
 
     export GITHUB_TOKEN=yyyyyyyyyyyyyyyyyyyyyyyyyy
     kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d
