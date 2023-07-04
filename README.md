@@ -18,7 +18,7 @@ This repo is meant to serve as a jumping off point for a self managing argoCD in
 
 ### How to bootstrap a cluster:
 
-    assumed installs: docker(localdev), kind(localdev), step-cli (&openssl), argocd cli, kubectl, linkderd cli, vault cli
+    assumed installs: docker(localdev), kind(localdev), step-cli (&openssl), argocd cli, kubectl, vault cli
 
     // Create some namespaces, by hand, argo will idempotently ensure these are created and manage them once the bootstrap is completed.
     kind create cluster
