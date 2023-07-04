@@ -40,6 +40,8 @@ This repo is meant to serve as a jumping off point for a self managing argoCD in
     sync argocd, application-root, and vault
     kubectl port-forward -n vault svc/localdev-vault 8200:8200
 
+    login with token 'root' for localdev
+
 ### Add/Remove an application
 
     * add/remove a new application crd to kustomizations/application-root, update kustomization.yaml as needed.
