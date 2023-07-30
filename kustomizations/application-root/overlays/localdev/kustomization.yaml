@@ -7,6 +7,18 @@ resources:
   - namespaces.yaml
   - argocd.yaml
   - application-root.yaml
+  - cert-manager.yaml
   - prometheus.yaml
   - vault.yaml
   - external-secrets.yaml
+  - linkerd-certificates.yaml
+  - linkerd-crds.yaml
+  - linkerd-control-plane.yaml
+  - linkerd-viz.yaml
+  - grafana.yaml
+  - loki.yaml
+  - promtail.yaml
+  - tempo.yaml
+  - kafka.yaml
+  - tekton.yaml
+  - tekton-pipelines.yaml

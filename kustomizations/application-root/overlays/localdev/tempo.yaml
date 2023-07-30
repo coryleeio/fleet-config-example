@@ -1,0 +1,37 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: tempo
+  namespace: argocd
+spec:
+  generators:
+  - list:
+      elements:
+      - cluster: localdev
+        url: https://kubernetes.default.svc
+  template:
+    metadata:
+      name: '{{cluster}}-tempo'
+    spec:
+      project: "default"
+      sources:
+        - repoURL: 'https://grafana.github.io/helm-charts'
+          chart: tempo-distributed
+          targetRevision: 1.4.7
+          helm:
+            releaseName: '{{cluster}}-tempo'
+            valueFiles:
+            - values.yaml
+            - values.yaml
+            - $values/helmvalues/tempo/values.yaml
+            - $values/helmvalues/tempo/{{cluster}}.yaml
+        - repoURL: 'https://github.com/coryleeio/blueprint-fleet-config'
+          targetRevision: HEAD
+          ref: values
+      destination:
+        server: '{{url}}'
+        namespace: '{{cluster}}-tempo'
+      syncPolicy:
+        automated: 
+          prune: true
+          selfHeal: true

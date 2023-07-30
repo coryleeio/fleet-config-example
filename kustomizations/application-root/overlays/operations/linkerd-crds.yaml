@@ -1,0 +1,42 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: linkerd-crds
+  namespace: argocd
+spec:
+  generators:
+  - list:
+      elements:
+      - cluster: analytics
+        url: https://analytics.k8s.local
+      - cluster: operations
+        url: https://operations.k8s.local
+      - cluster: production-eu-west-1
+        url: https://production-eu-west-1.k8s.local
+      - cluster: production-us-east-1
+        url: https://production-us-east-1.k8s.local
+  template:
+    metadata:
+      name: '{{cluster}}-linkerd-crds'
+    spec:
+      project: "default"
+      sources:
+        - repoURL: 'https://helm.linkerd.io/stable'
+          chart: linkerd-crds
+          targetRevision: 1.6.1
+          helm:
+            releaseName: '{{cluster}}-linkerd-crds'
+            valueFiles:
+            - values.yaml
+            - $values/helmvalues/linkerd-crds/values.yaml
+            - $values/helmvalues/linkerd-crds/{{cluster}}.yaml
+        - repoURL: 'https://github.com/coryleeio/blueprint-fleet-config'
+          targetRevision: HEAD
+          ref: values
+      destination:
+        server: '{{url}}'
+        namespace: '{{cluster}}-linkerd-crds'
+      syncPolicy:
+        automated: 
+          prune: true
+          selfHeal: true

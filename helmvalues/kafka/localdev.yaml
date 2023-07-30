@@ -1,0 +1,16 @@
+
+rbac:
+  create: true
+metrics:
+  kafka:
+    enabled: true
+externalAccess:
+  enabled: true
+  service:
+    type: NodePort
+    nodePorts:
+      - 31111
+  autoDiscovery:
+    enabled: true
+serviceAccount:
+  create: true      

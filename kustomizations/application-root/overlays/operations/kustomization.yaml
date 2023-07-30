@@ -7,6 +7,12 @@ resources:
   - namespaces.yaml
   - argocd.yaml
   - application-root.yaml
+  - cert-manager.yaml
   - prometheus.yaml
   - vault.yaml
   - external-secrets.yaml
+  - internal-ingress-nginx.yaml
+  - linkerd-crds.yaml
+  - linkerd-control-plane.yaml
+  - linkerd-viz.yaml
+  - grafana.yaml

@@ -1,0 +1,42 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: cert-manager
+  namespace: argocd
+spec:
+  generators:
+  - list:
+      elements:
+      - cluster: analytics
+        url: https://analytics.k8s.local
+      - cluster: operations
+        url: https://operations.k8s.local
+      - cluster: production-eu-west-1
+        url: https://production-eu-west-1.k8s.local
+      - cluster: production-us-east-1
+        url: https://production-us-east-1.k8s.local
+  template:
+    metadata:
+      name: '{{cluster}}-cert-manager'
+    spec:
+      project: "default"
+      sources:
+        - repoURL: 'https://charts.jetstack.io'
+          chart: cert-manager
+          targetRevision: v1.12.2
+          helm:
+            releaseName: '{{cluster}}-cert-manager'
+            valueFiles:
+            - values.yaml
+            - $values/helmvalues/cert-manager/values.yaml
+            - $values/helmvalues/cert-manager/{{cluster}}.yaml
+        - repoURL: 'https://github.com/coryleeio/blueprint-fleet-config'
+          targetRevision: HEAD
+          ref: values
+      destination:
+        server: '{{url}}'
+        namespace: '{{cluster}}-cert-manager'
+      syncPolicy:
+        automated: 
+          prune: true
+          selfHeal: true

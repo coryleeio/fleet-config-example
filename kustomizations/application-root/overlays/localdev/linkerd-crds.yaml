@@ -1,0 +1,36 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: linkerd-crds
+  namespace: argocd
+spec:
+  generators:
+  - list:
+      elements:
+      - cluster: localdev
+        url: https://kubernetes.default.svc
+  template:
+    metadata:
+      name: '{{cluster}}-linkerd-crds'
+    spec:
+      project: "default"
+      sources:
+        - repoURL: 'https://helm.linkerd.io/stable'
+          chart: linkerd-crds
+          targetRevision: 1.6.1
+          helm:
+            releaseName: '{{cluster}}-linkerd-crds'
+            valueFiles:
+            - values.yaml
+            - $values/helmvalues/linkerd-crds/values.yaml
+            - $values/helmvalues/linkerd-crds/{{cluster}}.yaml
+        - repoURL: 'https://github.com/coryleeio/blueprint-fleet-config'
+          targetRevision: HEAD
+          ref: values
+      destination:
+        server: '{{url}}'
+        namespace: 'linkerd'
+      syncPolicy:
+        automated: 
+          prune: true
+          selfHeal: true

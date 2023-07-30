@@ -1,0 +1,36 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: internal-ingress-nginx
+  namespace: argocd
+spec:
+  generators:
+  - list:
+      elements:
+      - cluster: localdev
+        url: https://kubernetes.default.svc
+  template:
+    metadata:
+      name: '{{cluster}}-internal-ingress-nginx'
+    spec:
+      project: "default"
+      sources:
+        - repoURL: 'https://kubernetes.github.io/ingress-nginx'
+          chart: ingress-nginx
+          targetRevision: 4.7.1
+          helm:
+            releaseName: '{{cluster}}-internal-ingress-nginx'
+            valueFiles:
+            - values.yaml
+            - $values/helmvalues/internal-ingress-nginx/values.yaml
+            - $values/helmvalues/internal-ingress-nginx/{{cluster}}.yaml
+        - repoURL: 'https://github.com/coryleeio/blueprint-fleet-config'
+          targetRevision: HEAD
+          ref: values
+      destination:
+        server: '{{url}}'
+        namespace: '{{cluster}}-internal-ingress-nginx'
+      syncPolicy:
+        automated: 
+          prune: true
+          selfHeal: true

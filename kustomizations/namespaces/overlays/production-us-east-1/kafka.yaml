@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: production-us-east-1-kafka
+  labels:
+    name: production-us-east-1-kafka
+  

@@ -28,6 +28,7 @@ spec:
             releaseName: '{{cluster}}-prometheus'
             valueFiles:
             - values.yaml
+            - $values/helmvalues/prometheus/values.yaml
             - $values/helmvalues/prometheus/{{cluster}}.yaml
         - repoURL: 'https://github.com/coryleeio/blueprint-fleet-config'
           targetRevision: HEAD
@@ -38,3 +39,4 @@ spec:
       syncPolicy:
         automated: 
           prune: true
+          selfHeal: true
